@@ -23,7 +23,7 @@ describe("Testing user model", () => {
 
 	const updatedUser = { name: "Updated User Name" };
 
-	test("Creating user", async () => {
+	test("Create user", async () => {
 		const userData: UserInterface = await UserModel.create(user);
 
 		expect(userData.userID).toBe(user.userID);
