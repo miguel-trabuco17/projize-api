@@ -9,10 +9,6 @@ describe("Testing Project Model", () => {
 		await MongooseService.connect();
 	});
 
-	afterAll(async () => {
-		await MongooseService.disconnect();
-	});
-
 	const project: ProjectInterface = {
 		projectID: uuid(),
 		ownerID: uuid(),
@@ -78,5 +74,12 @@ describe("Testing Project Model", () => {
 		expect(projectData.description).toBe(project.description);
 		expect(projectData.budget).toBe(project.budget);
 		expect(projectData.usersID).toEqual(project.usersID);
+	});
+
+	afterAll(async () => {
+		await ProjectModel.deleteMany({
+			projectID: project.projectID,
+		});
+		await MongooseService.disconnect();
 	});
 });

@@ -9,10 +9,6 @@ describe("Testing task model", () => {
 		MongooseService.connect();
 	});
 
-	afterAll(() => {
-		MongooseService.disconnect();
-	});
-
 	const task: TaskInterface = {
 		taskID: uuid(),
 		projectID: uuid(),
@@ -69,5 +65,12 @@ describe("Testing task model", () => {
 		expect(taskData.projectID).toBe(task.projectID);
 		expect(taskData.name).toBe(updatedTask.name);
 		expect(taskData.isDone).toBe(updatedTask.isDone);
+	});
+
+	afterAll( async () => {
+		await TaskModel.deleteMany({
+			taskID: task.taskID,
+		});
+		MongooseService.disconnect();
 	});
 });

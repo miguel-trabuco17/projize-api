@@ -9,10 +9,6 @@ describe("Testing user model", () => {
 		MongooseService.connect();
 	});
 
-	afterAll(() => {
-		MongooseService.disconnect();
-	});
-
 	const user: UserInterface = {
 		userID: uuid(),
 		name: "User Name",
@@ -65,5 +61,12 @@ describe("Testing user model", () => {
 		})) as UserInterface;
 
 		expect(userData.userID).toBe(user.userID);
+	});
+
+	afterAll(async () => {
+		await UserModel.deleteMany({
+			userID: user.userID,
+		});
+		MongooseService.disconnect();
 	});
 });

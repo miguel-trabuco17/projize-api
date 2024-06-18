@@ -9,10 +9,6 @@ describe("Testing spent model", () => {
 		MongooseService.connect();
 	});
 
-	afterAll(() => {
-		MongooseService.disconnect();
-	});
-
 	const spent: SpentInterface = {
 		spentID: uuid(),
 		projectID: uuid(),
@@ -73,5 +69,12 @@ describe("Testing spent model", () => {
 		expect(spentData.amount).toBe(spent.amount);
 		expect(spentData.name).toBe(updatedSpent.name);
 		expect(spentData.date).toEqual(spent.date);
+	});
+
+	afterAll( async () => {
+		await SpentModel.deleteMany({
+			spentID: spent.spentID,
+		});
+		MongooseService.disconnect();
 	});
 });

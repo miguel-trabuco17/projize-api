@@ -8,10 +8,6 @@ describe("Test verification code model", () => {
 		MongooseService.connect();
 	});
 
-	afterAll(() => {
-		MongooseService.disconnect();
-	});
-
 	const verificationCode = {
 		code: "123456",
 		email: "user@email.com",
@@ -52,5 +48,12 @@ describe("Test verification code model", () => {
 		const verificationCodeData = (await VerificationCodeModel.findOneAndDelete({
 			email: verificationCode.email,
 		})) as VerificationCodeInterface;
+	});
+
+	afterAll(async () => {
+		await VerificationCodeModel.deleteMany({
+			email: verificationCode.email,
+		});
+		MongooseService.disconnect();
 	});
 });
