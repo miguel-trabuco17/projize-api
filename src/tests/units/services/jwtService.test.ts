@@ -1,5 +1,5 @@
 import "dotenv/config";
-import JwtService from "../../../services/JwtService";
+import { createToken, verifyToken } from "../../../services/jwtService";
 import { v4 as uuid } from "uuid";
 import type { JwtPayload } from "jsonwebtoken";
 
@@ -8,19 +8,31 @@ describe("Test jwt service", () => {
 	const userID: string = uuid();
 
 	test("Generate token", () => {
-		token = JwtService.generateToken(userID);
+		token = createToken(userID);
 		expect(token).not.toBeNull();
 	});
 
 	test("Decode token", () => {
-		const decodedToken: JwtPayload | null = JwtService.decodeToken(
-			token as string,
-		);
-		expect(decodedToken).not.toBeNull();
+		let decodedToken: JwtPayload | string = "";
+
+		try {
+			decodedToken = verifyToken(token as string);
+		} catch (error) {
+			decodedToken = "";
+		}
+
+		expect(decodedToken).not.toBe("");
 	});
 
 	test("Decode invalid token", () => {
-		const decodedToken = JwtService.decodeToken("invalid token");
-		expect(decodedToken).toBeNull();
+		let decodedToken: JwtPayload | string = "";
+
+		try {
+			decodedToken = verifyToken("invalid token");
+		} catch (error) {
+			decodedToken = "";
+		}
+
+		expect(decodedToken).toBe("");
 	});
 });
