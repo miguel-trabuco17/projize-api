@@ -1,6 +1,6 @@
 import server from "../../app";
 import request from "supertest";
-import MongooseService from "../../services/MongooseService";
+import { disconnectDatabase } from "../../services/mongooseService";
 
 describe("Testing app.ts", () => {
 	test("Testing app.ts", async () => {
@@ -11,6 +11,6 @@ describe("Testing app.ts", () => {
 
 	afterAll((done) => {
 		server.close(done);
-		MongooseService.disconnect();
+		disconnectDatabase();
 	});
 });
