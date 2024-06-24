@@ -1,12 +1,15 @@
 import type SpentInterface from "../../../interfaces/SpentInterface";
 import SpentModel from "../../../models/SpentModel";
-import MongooseService from "../../../services/MongooseService";
+import {
+	connectDatabase,
+	disconnectDatabase,
+} from "../../../services/mongooseService";
 import { v4 as uuid } from "uuid";
 import "dotenv/config";
 
 describe("Testing spent model", () => {
 	beforeAll(() => {
-		MongooseService.connect();
+		connectDatabase();
 	});
 
 	const spent: SpentInterface = {
@@ -71,10 +74,10 @@ describe("Testing spent model", () => {
 		expect(spentData.date).toEqual(spent.date);
 	});
 
-	afterAll( async () => {
+	afterAll(async () => {
 		await SpentModel.deleteMany({
 			spentID: spent.spentID,
 		});
-		MongooseService.disconnect();
+		disconnectDatabase();
 	});
 });

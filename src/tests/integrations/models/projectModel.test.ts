@@ -1,4 +1,7 @@
-import MongooseService from "../../../services/MongooseService";
+import {
+	connectDatabase,
+	disconnectDatabase,
+} from "../../../services/mongooseService";
 import ProjectModel from "../../../models/ProjectModel";
 import type ProjectInterface from "../../../interfaces/ProjectInterface";
 import { v4 as uuid } from "uuid";
@@ -6,7 +9,7 @@ import "dotenv/config";
 
 describe("Testing Project Model", () => {
 	beforeAll(async () => {
-		await MongooseService.connect();
+		await connectDatabase();
 	});
 
 	const project: ProjectInterface = {
@@ -80,6 +83,6 @@ describe("Testing Project Model", () => {
 		await ProjectModel.deleteMany({
 			projectID: project.projectID,
 		});
-		await MongooseService.disconnect();
+		await disconnectDatabase();
 	});
 });

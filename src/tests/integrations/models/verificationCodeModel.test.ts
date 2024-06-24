@@ -1,11 +1,14 @@
-import MongooseService from "../../../services/MongooseService";
+import {
+	connectDatabase,
+	disconnectDatabase,
+} from "../../../services/mongooseService";
 import VerificationCodeModel from "../../../models/VerificationCodeModel";
 import "dotenv/config";
 import type VerificationCodeInterface from "../../../interfaces/VerificationCodeInterface";
 
 describe("Test verification code model", () => {
 	beforeAll(() => {
-		MongooseService.connect();
+		connectDatabase();
 	});
 
 	const verificationCode = {
@@ -54,6 +57,6 @@ describe("Test verification code model", () => {
 		await VerificationCodeModel.deleteMany({
 			email: verificationCode.email,
 		});
-		MongooseService.disconnect();
+		disconnectDatabase();
 	});
 });

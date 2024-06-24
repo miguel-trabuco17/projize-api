@@ -1,4 +1,7 @@
-import MongooseService from "../../../services/MongooseService";
+import {
+	connectDatabase,
+	disconnectDatabase,
+} from "../../../services/mongooseService";
 import TaskModel from "../../../models/TaskModel";
 import type TaskInterface from "../../../interfaces/TaskInterface";
 import { v4 as uuid } from "uuid";
@@ -6,7 +9,7 @@ import "dotenv/config";
 
 describe("Testing task model", () => {
 	beforeAll(() => {
-		MongooseService.connect();
+		connectDatabase();
 	});
 
 	const task: TaskInterface = {
@@ -67,10 +70,10 @@ describe("Testing task model", () => {
 		expect(taskData.isDone).toBe(updatedTask.isDone);
 	});
 
-	afterAll( async () => {
+	afterAll(async () => {
 		await TaskModel.deleteMany({
 			taskID: task.taskID,
 		});
-		MongooseService.disconnect();
+		disconnectDatabase();
 	});
 });

@@ -1,4 +1,7 @@
-import MongooseService from "../../../services/MongooseService";
+import {
+	connectDatabase,
+	disconnectDatabase,
+} from "../../../services/mongooseService";
 import UserModel from "../../../models/UserModel";
 import type UserInterface from "../../../interfaces/UserInterface";
 import "dotenv/config";
@@ -6,7 +9,7 @@ import { v4 as uuid } from "uuid";
 
 describe("Testing user model", () => {
 	beforeAll(() => {
-		MongooseService.connect();
+		connectDatabase();
 	});
 
 	const user: UserInterface = {
@@ -67,6 +70,6 @@ describe("Testing user model", () => {
 		await UserModel.deleteMany({
 			userID: user.userID,
 		});
-		MongooseService.disconnect();
+		disconnectDatabase();
 	});
 });
