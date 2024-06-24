@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-export const connect = async (): Promise<void> => {
+export const connectDatabase = async (): Promise<void> => {
 	try {
 		await mongoose.connect(process.env.DATABASE_URL as string);
 		console.log("Connected to MongoDB");
@@ -9,7 +9,7 @@ export const connect = async (): Promise<void> => {
 	}
 };
 
-export const disconnect = async (): Promise<void> => {
+export const disconnectDatabase = async (): Promise<void> => {
 	try {
 		await mongoose.disconnect();
 		console.log("Disconnected from MongoDB");

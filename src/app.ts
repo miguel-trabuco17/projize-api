@@ -2,7 +2,10 @@ import express from "express";
 import type { Application } from "express";
 import cors from "cors";
 import "dotenv/config";
-import MongooseService from "./services/MongooseService";
+import { connectDatabase } from "./services/mongooseService";
+
+//import routes
+import authRoutes from "./routes/authRoutes";
 
 //app configuration
 const app: Application = express();
@@ -10,7 +13,7 @@ app.use(cors());
 app.use(express.json());
 
 //database connection
-MongooseService.connect();
+connectDatabase();
 
 //routes
 app.get("/", (req, res) => {
@@ -18,6 +21,8 @@ app.get("/", (req, res) => {
 		status: "working",
 	});
 });
+
+app.use("/auth", authRoutes);
 
 const PORT: string = process.env.PORT as string;
 const server = app.listen(PORT, () => {
