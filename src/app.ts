@@ -1,8 +1,8 @@
 import express from "express";
 import type { Application } from "express";
-import cors from "cors";
 import "dotenv/config";
-import { connectDatabase } from "./services/mongooseService";
+import cors from "cors";
+import MongooseService from "./services/MongooseService";
 
 //import routes
 import authRoutes from "./routes/authRoutes";
@@ -13,7 +13,8 @@ app.use(cors());
 app.use(express.json());
 
 //database connection
-connectDatabase();
+const mongooseService = new MongooseService();
+mongooseService.connectDatabase();
 
 //routes
 app.get("/", (req, res) => {

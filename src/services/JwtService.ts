@@ -1,10 +1,17 @@
 import jwt from "jsonwebtoken";
-const SECRET: string = process.env.SECRET as string;
 
-export const createToken = (payload: string) => {
-	return jwt.sign(payload, SECRET);
-};
+export default class JwtService {
+	private SECRET: string;
 
-export const verifyToken = (token: string) => {
-	return jwt.verify(token, SECRET);
-};
+	public createToken(payload: string): string {
+		return jwt.sign(payload, this.SECRET);
+	}
+
+	public decodeToken(token: string): string {
+		return jwt.decode(token) as string;
+	}
+
+	constructor() {
+		this.SECRET = process.env.SECRET as string;
+	}
+}

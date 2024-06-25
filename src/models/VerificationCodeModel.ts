@@ -4,6 +4,7 @@ import type VerificationCodeInterface from "../interfaces/VerificationCodeInterf
 const verificationCodeSchema = new mongoose.Schema<VerificationCodeInterface>({
 	code: { type: String, required: true },
 	email: { type: String, required: true },
+	verified: { type: Boolean, required: true, default: false },
 });
 
 const VerificationCodeModel = mongoose.model(
