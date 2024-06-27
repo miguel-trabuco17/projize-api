@@ -28,7 +28,7 @@ export default class SendCodeController {
 		const code: string = lodash.random(100000, 999999).toString();
 
 		if (verificationCodeDocument) {
-			await VerificationCodeModel.updateOne({ email }, { code });
+			await VerificationCodeModel.updateOne({ email }, { code, verified: false});
 		} else {
 			await VerificationCodeModel.create({ email, code });
 		}
