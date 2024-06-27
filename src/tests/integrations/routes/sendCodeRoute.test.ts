@@ -5,7 +5,7 @@ import server from "../../../app";
 import UserModel from "../../../models/UserModel";
 import type UserInterface from "../../../interfaces/UserInterface";
 
-describe("Test send code controller", () => {
+describe("Test send code route", () => {
 	const mongooseService = new MongooseService();
 
 	const email: string = "user@email.com";

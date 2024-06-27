@@ -7,7 +7,7 @@ import type UserInterface from "../../interfaces/UserInterface";
 import type VerificationCodeInterface from "../../interfaces/VerificationCodeInterface";
 
 export default class SendCodeController {
-	public async handle(req: Request, res: Response) {
+	public async handle(req: Request, res: Response): Promise<Response> {
 		const { email }: { email: string } = req.body;
 
 		if (!email) {
