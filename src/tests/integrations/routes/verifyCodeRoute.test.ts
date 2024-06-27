@@ -16,7 +16,6 @@ describe("Test verify code route", () => {
 	};
 
 	beforeAll(async () => {
-		await mongooseService.connectDatabase();
 		await VerificationCodeModel.create(codeData);
 	});
 

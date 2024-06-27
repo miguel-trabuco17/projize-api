@@ -10,10 +10,6 @@ describe("Test send code route", () => {
 
 	const email: string = "user@email.com";
 
-	beforeAll(async () => {
-		await mongooseService.connectDatabase();
-	});
-
 	afterAll(async () => {
 		await VerificationCodeModel.deleteMany({ email });
 		await UserModel.deleteMany({ email });
