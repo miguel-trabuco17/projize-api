@@ -6,6 +6,7 @@ import MongooseService from "./services/MongooseService";
 
 //import routes
 import authRoutes from "./routes/authRoutes";
+import userRoutes from "./routes/userRoutes";
 
 //app configuration
 const app: Application = express();
@@ -24,6 +25,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/auth", authRoutes);
+app.use("/user", userRoutes);
 
 const PORT: string = process.env.PORT as string;
 const server = app.listen(PORT, () => {
