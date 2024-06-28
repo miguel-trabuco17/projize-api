@@ -66,6 +66,7 @@ export default class CreateUserController {
 		};
 
 		await UserModel.create(userData);
+		await VerificationCodeModel.updateOne({ email }, { userID });
 
 		return response.status(201).json({
 			token,
