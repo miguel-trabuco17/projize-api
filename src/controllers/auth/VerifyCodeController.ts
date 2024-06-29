@@ -4,7 +4,7 @@ import type { Request, Response } from "express";
 
 export default class VerifyCodeController {
 	public async handle(req: Request, res: Response): Promise<Response> {
-		const { code }: { code: string } = req.body;
+		const code: string = req.body.code;
 
 		if (!code) {
 			return res.status(400).json({ message: "Code is required" });
