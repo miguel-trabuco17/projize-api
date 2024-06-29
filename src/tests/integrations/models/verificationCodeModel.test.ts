@@ -17,7 +17,7 @@ describe("Test verification code model", () => {
 
 	afterAll(async () => {
 		await VerificationCodeModel.deleteMany({
-			name: verificationCodeData.email,
+			email: verificationCodeData.email,
 		});
 		await mongooseService.disconnectDatabase();
 	});
