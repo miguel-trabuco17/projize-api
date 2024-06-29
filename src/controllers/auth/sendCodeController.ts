@@ -2,9 +2,10 @@ import lodash from "lodash";
 import type { Request, Response } from "express";
 import UserModel from "../../models/UserModel";
 import VerificationCodeModel from "../../models/VerificationCodeModel";
-import sendEmailService from "../../services/sendEmailService";
+import NodemailerService from "../../services/NodemailerService";
 import type UserInterface from "../../interfaces/UserInterface";
 import type VerificationCodeInterface from "../../interfaces/VerificationCodeInterface";
+import sendCodeEmailTemplate from "../../util/sendCodeEmailTemplate";
 
 export default class SendCodeController {
 	public async handle(req: Request, res: Response): Promise<Response> {
@@ -28,13 +29,27 @@ export default class SendCodeController {
 		const code: string = lodash.random(100000, 999999).toString();
 
 		if (verificationCodeDocument) {
-			await VerificationCodeModel.updateOne({ email }, { code, verified: false});
+			await VerificationCodeModel.updateOne(
+				{ email },
+				{ code, verified: false },
+			);
 		} else {
 			await VerificationCodeModel.create({ email, code });
 		}
 
-		sendEmailService();
+		const nodemailerService = new NodemailerService();
 
+		const template: string = sendCodeEmailTemplate(code);
+
+		const isSent: boolean = await nodemailerService.sendEmail({
+			body: template,
+			subject: "Projize - Verification Code",
+			email,
+		});
+
+		if (!isSent) {
+			return res.status(500).json({ message: "Failed to send code" });
+		}
 		return res.status(200).json({ message: "Code sent" });
 	}
 }
