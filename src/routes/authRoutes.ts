@@ -1,9 +1,8 @@
 import express from "express";
-const router = express.Router();
-
-// Importing controllers
 import SendCodeController from "../controllers/auth/SendCodeController";
 import VerifyCodeController from "../controllers/auth/VerifyCodeController";
+
+const router = express.Router();
 
 // Controllers
 const sendCodeController = new SendCodeController();
