@@ -3,14 +3,22 @@ import type { Application } from "express";
 import "dotenv/config";
 import cors from "cors";
 import MongooseService from "./services/MongooseService";
+import type { CorsOptions } from "cors";
 
 //import routes
 import authRoutes from "./routes/authRoutes";
 import userRoutes from "./routes/userRoutes";
 
+//cors configuration
+const corsOptions: CorsOptions = {
+	origin: "*",
+	methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+	allowedHeaders: ["Content-Type", "Authorization"],
+};
+
 //app configuration
 const app: Application = express();
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 
 //database connection
