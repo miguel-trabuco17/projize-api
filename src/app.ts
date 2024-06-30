@@ -3,6 +3,7 @@ import type { Application } from "express";
 import "dotenv/config";
 import cors from "cors";
 import MongooseService from "./services/MongooseService";
+import cookieParser from "cookie-parser";
 import type { CorsOptions } from "cors";
 
 //import routes
@@ -20,6 +21,7 @@ const corsOptions: CorsOptions = {
 const app: Application = express();
 app.use(cors(corsOptions));
 app.use(express.json());
+app.use(cookieParser());
 
 //database connection
 const mongooseService = new MongooseService();
